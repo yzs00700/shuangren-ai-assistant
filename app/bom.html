@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BOM 报价 · 霜刃AI助手</title>
+<link rel="icon" href="favicon.png">
+<link rel="stylesheet" href="bom.css?v=20261105b">
+</head>
+<body class="view-bom">
+<svg class="svg-sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2zM17 21v-8H7v8M7 3v5h8"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9zM14 3v6h6M8 13h8M8 17h5"/></symbol>
+  <symbol id="i-excel" viewBox="0 0 24 24"><path d="M3 5h18v14H3zM3 10h18M9 5v14M15 5v14"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7M21 3v6h-6"/></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><path d="M3 7v6h6M3 13a9 9 0 1 0 3-7"/></symbol>
+  <symbol id="i-redo" viewBox="0 0 24 24"><path d="M21 7v6h-6M21 13a9 9 0 1 1-3-7"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24"><path d="M3 9l6-6 12 12-6 6zM7 11l2 2M10 8l2 2M13 5l2 2"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><path d="M3 5h18v14H3zM8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M21 15l-5-5L5 19"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-cube" viewBox="0 0 24 24"><path d="M12 2l9 5v10l-9 5-9-5V7zM3 7l9 5 9-5M12 12v10"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v7H6z"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M3 5h18v16H3zM3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21a8 8 0 1 0-16 0M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8"/></symbol>
+  <symbol id="i-coin" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v10M15 9.5c0-1.4-1.3-2.5-3-2.5s-3 1-3 2.4c0 3.3 6 1.5 6 4.6 0 1.4-1.3 2.5-3 2.5s-3-1.1-3-2.5"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M14 4v4M4 12h4M12 12h8M8 10v4M4 18h10M18 18h2M14 16v4"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 11v5M12 8h.01"/></symbol>
+  <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5M12 8v4l3 2"/></symbol>
+  <symbol id="i-quote" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><path d="M6 11h12v10H6zM8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+</svg>
+<div id="topbar">
+  <div class="brand">
+    <img src="logo.png" alt="">
+    <div>
+      <b>BOM 报价</b>
+      <small>霜刃AI助手 · 多品类成本核算</small>
+    </div>
+  </div>
+
+  <div class="proj">
+    <label><svg class="ico" aria-hidden="true"><use href="#i-folder"></use></svg>项目<input id="projName" placeholder="项目 / 产品名称"></label>
+    <label><svg class="ico" aria-hidden="true"><use href="#i-user"></use></svg>客户<input id="projCustomer" placeholder="客户名称"></label>
+    <label><svg class="ico" aria-hidden="true"><use href="#i-calendar"></use></svg>日期<input id="projDate" type="date"></label>
+    <label><svg class="ico" aria-hidden="true"><use href="#i-coin"></use></svg>币种
+      <select id="currency">
+        <option value="CNY">CNY ¥</option>
+        <option value="USD">USD $</option>
+        <option value="EUR">EUR €</option>
+      </select>
+    </label>
+    <label><svg class="ico" aria-hidden="true"><use href="#i-pin"></use></svg>地区
+      <select id="region" title="选择加工地区，材料/加工/表面处理参考价按地区系数调整"></select>
+    </label>
+  </div>
+
+  <div class="spacer"></div>
+  <div class="actions">
+    <button id="btnCreo" title="从当前 Creo 装配导入零件清单"><svg class="ico" aria-hidden="true"><use href="#i-cube"></use></svg>从 Creo 导入</button>
+    <button id="btnStep" title="解析 STEP / IGES / BREP，自动计算体积和重量"><svg class="ico" aria-hidden="true"><use href="#i-box"></use></svg>STEP 导入</button>
+    <button id="btnAdd" class="primary"><svg class="ico" aria-hidden="true"><use href="#i-plus"></use></svg>添加零件</button>
+    <button id="btnCsv" title="导出正式报价单 Excel（含抬头、汇总、条款和签章）"><svg class="ico" aria-hidden="true"><use href="#i-excel"></use></svg>导出 Excel</button>
+    <button id="btnJson" title="导出 JSON，便于备份和二次处理"><svg class="ico" aria-hidden="true"><use href="#i-code"></use></svg>导出 JSON</button>
+    <button id="btnPrint" title="打印或另存为 PDF"><svg class="ico" aria-hidden="true"><use href="#i-print"></use></svg>打印 / PDF</button>
+    <button id="btnBack" class="ghost" title="返回 AI 助手"><svg class="ico" aria-hidden="true"><use href="#i-back"></use></svg>返回</button>
+  </div>
+</div>
+
+<div id="viewtabs">
+  <button id="tabBom" class="active"><svg class="ico" aria-hidden="true"><use href="#i-table"></use></svg>产品BOM</button>
+  <button id="tabQuote"><svg class="ico" aria-hidden="true"><use href="#i-chart"></use></svg>报价明细</button>
+</div>
+
+<div id="quoteDocHead" class="bomdochead quotedoc">
+  <div class="bomdoc-logo">
+    <img id="quoteLogo" src="logo.png" alt="LOGO">
+    <label class="bomlogo-pick" id="quoteLogoPick" title="更换公司 LOGO">
+      <svg class="ico" aria-hidden="true"><use href="#i-image"></use></svg>
+      <span>更换 LOGO</span>
+    </label>
+  </div>
+
+  <div class="bomdoc-main">
+    <label class="docfield doc-company">
+      <span>公司名称</span>
+      <input id="quoteCompany" placeholder="公司名称">
+    </label>
+    <label class="docfield doc-title">
+      <span>报价单名称</span>
+      <input id="quoteDocName" placeholder="例如：XX 设备报价单">
+    </label>
+  </div>
+
+  <div class="bomdoc-stamp" title="报价版本与日期">
+    <span>报价版本</span>
+    <b id="quoteVersionShow">A</b>
+    <small id="quoteDateShow">—</small>
+    <em id="quoteCurShow">CNY</em>
+  </div>
+
+  <div class="bomdoc-grid">
+    <label class="docfield"><span>客户</span><input id="quoteCustomer" placeholder="客户名称"></label>
+    <label class="docfield"><span>项目名称</span><input id="quoteProject" placeholder="项目 / 产品名称"></label>
+    <label class="docfield"><span>报价单号</span><input id="quoteNo" placeholder="BJ-YYYYMMDD-001"></label>
+    <label class="docfield"><span>报价日期</span><input id="quoteDate" type="date"></label>
+    <label class="docfield"><span>有效期至</span><input id="quoteValid" type="date"></label>
+    <label class="docfield"><span>编制人</span><input id="quotePreparedBy" placeholder="姓名"></label>
+    <label class="docfield"><span>审核</span><input id="quoteReviewedBy" placeholder="姓名"></label>
+    <label class="docfield"><span>版本</span><input id="quoteVersion" placeholder="A"></label>
+  </div>
+</div>
+
+<div id="bomView">
+  <div id="bomAssoc" class="bomassoc" hidden>
+    关联装配：<b id="bomAssocName"></b>
+    <button id="bomOpenAsm">打开装配</button>
+  </div>
+
+  <div id="bomDocHead" class="bomdochead">
+    <div class="bomdoc-logo">
+      <img id="bomLogo" src="logo.png" alt="LOGO">
+      <label class="bomlogo-pick" title="更换公司 LOGO">
+        <svg class="ico" aria-hidden="true"><use href="#i-image"></use></svg>
+        <span>更换 LOGO</span>
+        <input id="bomLogoFile" type="file" accept="image/*" hidden>
+      </label>
+    </div>
+
+    <div class="bomdoc-main">
+      <label class="docfield doc-company">
+        <span>公司名称</span>
+        <input id="bomCompany" placeholder="公司名称">
+      </label>
+      <label class="docfield doc-title">
+        <span>BOM 名称</span>
+        <input id="bomDocName" placeholder="例如：XX 设备产品 BOM">
+      </label>
+    </div>
+
+    <div class="bomdoc-stamp" title="文档版本与最近修改日期">
+      <span>文件版本</span>
+      <b id="bomVersionShow">A</b>
+      <small id="bomDateShow">—</small>
+    </div>
+
+    <div class="bomdoc-grid">
+      <label class="docfield"><span>产品名称</span><input id="bomProductName" placeholder="产品名称"></label>
+      <label class="docfield"><span>产品型号</span><input id="bomProductModel" placeholder="产品型号 / 图号"></label>
+      <label class="docfield"><span>编制人</span><input id="bomPreparedBy" placeholder="姓名"></label>
+      <label class="docfield"><span>校对</span><input id="bomCheckedBy" placeholder="姓名"></label>
+      <label class="docfield"><span>审核</span><input id="bomReviewedBy" placeholder="姓名"></label>
+      <label class="docfield"><span>版本</span><input id="bomVersion" placeholder="A"></label>
+      <label class="docfield"><span>编制日期</span><input id="bomPreparedDate" type="date"></label>
+      <label class="docfield"><span>修改日期</span><input id="bomModifiedDate" type="date"></label>
+    </div>
+  </div>
+
+  <div id="bomTools" class="bomtools">
+    <div class="tbgroup">
+      <label class="bomtpl">
+        <svg class="ico" aria-hidden="true"><use href="#i-table"></use></svg>
+        <span>模板</span>
+        <select id="bomTemplate">
+          <option value="common">常用（默认）</option>
+          <option value="blank">空白模板</option>
+        </select>
+      </label>
+    </div>
+    <div class="tbgroup">
+      <button id="bomCreo" title="读取当前 Creo 装配，按所选层级展开子装配，生成多级 BOM"><svg class="ico" aria-hidden="true"><use href="#i-cube"></use></svg>从 Creo 生成</button>
+      <label class="bomtpl" title="选择从 Creo 生成 BOM 时要展开到第几层子装配；全部 = 一直展开到零件；自定义可选择 1-12 层">
+        <span>展开层级</span>
+        <select id="bomDepth">
+          <option value="1">1 层（仅顶层）</option>
+          <option value="2" selected>2 层</option>
+          <option value="3">3 层</option>
+          <option value="4">4 层</option>
+          <option value="5">5 层</option>
+          <option value="0">全部</option>
+          <option value="custom">自定义…</option>
+        </select>
+        <input id="bomDepthCustom" type="number" min="1" max="12" step="1" value="2"
+          title="自定义展开层数（1-12）" style="display:none;width:56px">
+      </label>
+      <button id="bomLoadE" title="加载 HelloCreo E-Bom（CSV/JSON）"><svg class="ico" aria-hidden="true"><use href="#i-file"></use></svg>加载 E-Bom</button>
+      <button id="bomLoadP" title="加载 HelloCreo P-Bom（CSV/JSON）"><svg class="ico" aria-hidden="true"><use href="#i-file"></use></svg>加载 P-Bom</button>
+    </div>
+    <div class="tbgroup">
+      <button id="bomOutline" title="从当前 Creo 装配读取模型轮廓尺寸"><svg class="ico" aria-hidden="true"><use href="#i-ruler"></use></svg>计算轮廓</button>
+      <button id="bomThumb" title="读取模型内嵌预览；在 Creo 视图管理器保存定向 Isometric 后保存模型可更新"><svg class="ico" aria-hidden="true"><use href="#i-image"></use></svg>加载缩略图</button>
+      <button id="bomSummary" title="按材料汇总行数、数量和重量"><svg class="ico" aria-hidden="true"><use href="#i-chart"></use></svg>零件汇总</button>
+    </div>
+    <div class="tbgroup">
+      <button id="bomUndo" disabled title="撤销上一步 BOM 修改（Ctrl+Z）"><svg class="ico" aria-hidden="true"><use href="#i-undo"></use></svg>撤销</button>
+      <button id="bomRedo" disabled title="重做 BOM 修改（Ctrl+Y）"><svg class="ico" aria-hidden="true"><use href="#i-redo"></use></svg>重做</button>
+    </div>
+    <div class="tbgroup">
+      <button id="bomLock" title="锁定/解锁勾选或选中的行：锁定后禁止编辑、删除，重新从 Creo 生成时保持不变"><svg class="ico" aria-hidden="true"><use href="#i-lock"></use></svg>锁定/解锁</button>
+      <button id="bomBatchDel" class="danger" title="批量删除勾选或选中的行；锁定的行会跳过"><svg class="ico" aria-hidden="true"><use href="#i-trash"></use></svg>批量删除</button>
+    </div>
+    <div class="tbgroup">
+      <button id="bomAdd"><svg class="ico" aria-hidden="true"><use href="#i-plus"></use></svg>添加 BOM 行</button>
+      <button id="bomSaveFile" title="保存到当前 Creo 三维模型所在目录"><svg class="ico" aria-hidden="true"><use href="#i-save"></use></svg>保存 BOM</button>
+      <button id="bomLoadFile"><svg class="ico" aria-hidden="true"><use href="#i-folder"></use></svg>加载 BOM</button>
+    </div>
+    <div class="tbgroup">
+      <button id="bomExport" class="excel"><svg class="ico" aria-hidden="true"><use href="#i-excel"></use></svg>导出 Excel</button>
+      <button id="bomToQuote" class="primary"><svg class="ico" aria-hidden="true"><use href="#i-quote"></use></svg>导入到报价</button>
+    </div>
+    <div class="tbgroup tb-end">
+      <button id="bomDemo"><svg class="ico" aria-hidden="true"><use href="#i-file"></use></svg>示例 BOM</button>
+      <button id="bomClear" class="danger"><svg class="ico" aria-hidden="true"><use href="#i-trash"></use></svg>清空</button>
+    </div>
+    <input id="bomFile" type="file" accept=".json,application/json" style="display:none">
+    <input type="file" id="bomFileE" accept=".csv,.json,.txt" hidden>
+    <input type="file" id="bomFileP" accept=".csv,.json,.txt" hidden>
+  </div>
+
+  <div class="bomsechead">
+    <div class="sec-title">
+      <svg class="ico" aria-hidden="true"><use href="#i-table"></use></svg>
+      <b>产品 BOM 清单</b>
+      <span class="muted" id="bomRowCount">共 0 行</span>
+    </div>
+  </div>
+  <div id="bomStatus" class="status"></div>
+  <div class="bomhint">
+    <svg class="ico" aria-hidden="true"><use href="#i-info"></use></svg>
+    <span>Excel 式操作：点单元格或拖选区域，Ctrl+C / Ctrl+V 复制粘贴；点序号选整行，点表头选整列；拖右下角小方块向下/向右填充，Ctrl+D 向下填充。行首复选框可多选后批量锁定/删除；手工添加的行和锁定行在“从 Creo 生成”时保留。</span>
+  </div>
+  <div class="tablewrap bomtablewrap">
+    <table id="bomTable">
+      <thead>
+        <tr>
+          <th class="b-no"><input type="checkbox" id="bomPickAll" title="全选/取消全选"> 序号</th>
+          <th class="b-level">层级</th>
+          <th class="b-kind">类别</th>
+          <th class="b-thumb">缩图</th>
+          <th class="b-name">名称</th>
+          <th class="b-mat">材料</th>
+          <th class="b-surface">表面处理</th>
+          <th class="b-finish">表面效果</th>
+          <th class="b-color">颜色</th>
+          <th class="b-qty">数量</th>
+          <th class="b-num">单重</th>
+          <th class="b-num">总重</th>
+          <th class="b-drawn">已出图</th>
+          <th class="b-outline">轮廓尺寸</th>
+          <th class="b-remark">备注</th>
+          <th class="b-act"></th>
+        </tr>
+      </thead>
+      <tbody id="bomRows"></tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td colspan="8">合计</td>
+          <td class="c-num" id="bomTQty">—</td>
+          <td></td>
+          <td class="c-num" id="bomTWeight">—</td>
+          <td colspan="4"></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div id="bomEmpty" class="empty">
+    <img src="logo.png" alt="">
+    <h2>还没有产品BOM</h2>
+    <p>先建立产品BOM（层级 / 材料 / 数量 / 单重），再导入到报价。可加载 E-Bom / P-Bom，或载入示例。</p>
+    <div class="quick">
+      <button id="bomDemo2" class="demo"><svg class="ico" aria-hidden="true"><use href="#i-file"></use></svg>载入示例 BOM</button>
+      <button id="bomAdd2"><svg class="ico" aria-hidden="true"><use href="#i-plus"></use></svg>添加 BOM 行</button>
+    </div>
+  </div>
+  <div id="bomSummaryOut"></div>
+  <div id="bomRev" class="bomrev">
+    <div class="bomrevhead">
+      <div class="sec-title">
+        <svg class="ico" aria-hidden="true"><use href="#i-history"></use></svg>
+        <b>修改记录</b>
+        <span class="muted">版本变更与修订说明</span>
+      </div>
+      <button id="bomAddRev"><svg class="ico" aria-hidden="true"><use href="#i-plus"></use></svg>添加记录</button>
+    </div>
+    <table id="bomRevTable">
+      <thead>
+        <tr><th>版本</th><th>日期</th><th>修改内容</th><th>编制</th><th>审核</th><th></th></tr>
+      </thead>
+      <tbody id="bomRevRows"></tbody>
+    </table>
+  </div>
+  <datalist id="bomMaterials">
+    <option>AL6061</option><option>AL6063</option><option>AL5052</option>
+    <option>SUS304</option><option>SUS316</option><option>STEEL</option>
+    <option>Q235</option><option>45#</option><option>HT200</option>
+    <option>QT450</option><option>ADC12</option><option>ZL102</option>
+    <option>POM</option><option>PA6</option><option>ABS</option><option>PP</option>
+    <option>PC</option><option>硅橡胶</option><option>黄铜</option><option>紫铜</option>
+  </datalist>
+  <datalist id="bomColors">
+    <option>黑色</option><option>白色</option><option>灰色</option>
+    <option>银色</option><option>红色</option><option>蓝色</option>
+    <option>绿色</option><option>黄色</option><option>透明</option>
+    <option>阳极氧化本色</option><option>按客户样板</option>
+  </datalist>
+  <datalist id="bomKindList">
+    <option>组件</option><option>零件</option><option>标准件</option><option>外购件</option>
+  </datalist>
+  <datalist id="bomMaterialList"></datalist>
+  <datalist id="bomSurfaceList"></datalist>
+  <datalist id="bomFinishList"></datalist>
+</div>
+
+<div id="filterbar">
+  <div id="cats" class="chips"></div>
+  <div class="spacer"></div>
+  <div class="search">
+    <svg class="ico" aria-hidden="true"><use href="#i-search"></use></svg>
+    <input id="search" placeholder="搜索名称 / 规格 / 备注">
+  </div>
+  <span id="marketInfo" class="marketinfo" title="材料网价来自新浪财经期货">网价未同步</span>
+  <button id="btnMarket" class="mini" title="从新浪财经同步铝、铜、钢、塑料等期货网价"><svg class="ico" aria-hidden="true"><use href="#i-refresh"></use></svg>同步网价</button>
+  <button id="btnRates" class="mini"><svg class="ico" aria-hidden="true"><use href="#i-settings"></use></svg>费率设置</button>
+  <button id="btnClear" class="mini danger"><svg class="ico" aria-hidden="true"><use href="#i-trash"></use></svg>清空</button>
+</div>
+
+<div id="layout">
+  <main>
+    <div id="drop" class="drop">
+      <div class="dropicon">&#8681;</div>
+      <b>把 STEP / IGES / BREP 拖到这里</b>
+      <span>自动拆实体、算体积、算克重和材料费；文件只在本机浏览器解析，不上传。</span>
+      <input type="file" id="file" accept=".stp,.step,.igs,.iges,.brep" hidden>
+    </div>
+
+    <div id="status" class="status"></div>
+
+    <div class="bomsechead">
+      <div class="sec-title">
+        <svg class="ico" aria-hidden="true"><use href="#i-chart"></use></svg>
+        <b>报价明细</b>
+        <span class="muted" id="quoteRowCount">共 0 项</span>
+      </div>
+      <span class="sec-note">单价已含损耗；管理费、利润和税见右侧汇总</span>
+    </div>
+
+    <div class="tablewrap">
+      <table id="bom">
+        <thead>
+          <tr>
+            <th class="c-no">#</th>
+            <th class="c-cat">品类</th>
+            <th class="c-name">名称 / 规格</th>
+            <th class="c-qty">数量</th>
+            <th class="c-num">单重 g</th>
+            <th class="c-num">材料费</th>
+            <th class="c-num">加工费</th>
+            <th class="c-num">表面处理</th>
+            <th class="c-num">模具摊销</th>
+            <th class="c-num">外购费</th>
+            <th class="c-num">单价</th>
+            <th class="c-num">小计</th>
+            <th class="c-act"></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+        <tfoot>
+          <tr>
+            <td></td>
+            <td colspan="3">合计</td>
+            <td class="c-num" id="tWeight">—</td>
+            <td class="c-num" id="tMat">—</td>
+            <td class="c-num" id="tProc">—</td>
+            <td class="c-num" id="tSurf">—</td>
+            <td class="c-num" id="tMold">—</td>
+            <td class="c-num" id="tBuy">—</td>
+            <td class="c-num" id="tUnit">—</td>
+            <td class="c-num" id="tTotal">—</td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div id="empty" class="empty">
+      <img src="logo.png" alt="">
+      <h2>还没有零件</h2>
+      <p>点“添加零件”手工录入，或从 Creo 装配导入，或拖一个 STEP 文件进来。</p>
+      <div class="quick">
+        <button data-cat="plastic"><svg class="ico" aria-hidden="true"><use href="#i-plus"></use></svg>塑料件</button>
+        <button data-cat="sheet"><svg class="ico" aria-hidden="true"><use href="#i-plus"></use></svg>钣金件</button>
+        <button data-cat="diecast"><svg class="ico" aria-hidden="true"><use href="#i-plus"></use></svg>铸造件</button>
+        <button data-cat="cnc"><svg class="ico" aria-hidden="true"><use href="#i-plus"></use></svg>CNC 件</button>
+        <button data-cat="print3d"><svg class="ico" aria-hidden="true"><use href="#i-plus"></use></svg>3D 打印件</button>
+        <button data-cat="electric"><svg class="ico" aria-hidden="true"><use href="#i-plus"></use></svg>电器件</button>
+        <button data-cat="fastener"><svg class="ico" aria-hidden="true"><use href="#i-plus"></use></svg>紧固件</button>
+        <button data-cat="wire"><svg class="ico" aria-hidden="true"><use href="#i-plus"></use></svg>线材</button>
+        <button id="btnDemo" class="demo"><svg class="ico" aria-hidden="true"><use href="#i-file"></use></svg>载入示例</button>
+      </div>
+    </div>
+  </main>
+
+  <aside id="summary">
+    <h3>报价汇总</h3>
+    <div class="big">
+      <span>含税总价</span>
+      <b id="grand">¥0.00</b>
+    </div>
+    <div class="kv"><span>零件项数</span><b id="sItems">0</b></div>
+    <div class="kv"><span>总数量</span><b id="sQty">0</b></div>
+    <div class="kv"><span>材料费</span><b id="sMat">¥0.00</b></div>
+    <div class="kv"><span>加工费</span><b id="sProc">¥0.00</b></div>
+    <div class="kv"><span>表面处理</span><b id="sSurf">¥0.00</b></div>
+    <div class="kv"><span>模具摊销</span><b id="sMold">¥0.00</b></div>
+    <div class="kv"><span>外购件</span><b id="sBuy">¥0.00</b></div>
+    <div class="kv"><span>损耗</span><b id="sLoss">¥0.00</b></div>
+    <div class="kv"><span>未税小计</span><b id="sSub">¥0.00</b></div>
+    <div class="kv"><span>运费 / 其他</span><b id="sExtra">¥0.00</b></div>
+    <div class="kv"><span>管理费</span><b id="sMgmt">¥0.00</b></div>
+    <div class="kv"><span>利润</span><b id="sProfit">¥0.00</b></div>
+    <div class="kv"><span>税</span><b id="sTax">¥0.00</b></div>
+    <div class="note">金额为估算值，最终以实际工艺、供应商报价和合同为准。</div>
+  </aside>
+</div>
+
+<!-- ================= 行编辑弹窗 ================= -->
+<div id="modal" class="modal">
+  <div class="dialog">
+    <div class="dhead">
+      <b id="dTitle">编辑零件</b>
+      <button class="x" id="dClose"><svg class="ico" aria-hidden="true"><use href="#i-close"></use></svg></button>
+    </div>
+    <div class="dbody">
+      <div class="grid2">
+        <label>品类
+          <select id="fCat"></select>
+        </label>
+        <label>数量
+          <input id="fQty" type="number" min="0" step="1" value="1">
+        </label>
+        <label class="wide">名称
+          <input id="fName" placeholder="零件名称">
+        </label>
+        <label class="wide">规格 / 材料
+          <input id="fSpec" placeholder="例如 ABS 黑色、6061-T6、1.5mm 冷轧板">
+        </label>
+      </div>
+
+      <div class="sechead">成本参数</div>
+      <div id="fields" class="fields"></div>
+
+      <div class="grid2">
+        <label>损耗率 %
+          <input id="fLoss" type="number" min="0" step="0.1" value="0">
+        </label>
+        <label>单位
+          <select id="fUnit">
+            <option>件</option><option>个</option><option>套</option>
+            <option>根</option><option>米</option><option>千克</option><option>组</option>
+          </select>
+        </label>
+        <label class="wide">备注
+          <input id="fRemark" placeholder="工艺、颜色、供应商等">
+        </label>
+      </div>
+
+      <div id="preview" class="preview"></div>
+    </div>
+    <div class="dfoot">
+      <button id="dDelete" class="danger"><svg class="ico" aria-hidden="true"><use href="#i-trash"></use></svg>删除</button>
+      <div class="spacer"></div>
+      <button id="dCancel"><svg class="ico" aria-hidden="true"><use href="#i-close"></use></svg>取消</button>
+      <button id="dSave" class="primary"><svg class="ico" aria-hidden="true"><use href="#i-check"></use></svg>保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 费率设置 ================= -->
+<div id="rateModal" class="modal">
+  <div class="dialog wide">
+    <div class="dhead">
+      <b>地区费率与网价</b>
+      <button class="x" id="rClose"><svg class="ico" aria-hidden="true"><use href="#i-close"></use></svg></button>
+    </div>
+    <div class="dbody">
+      <div class="sechead">地区与网价</div>
+      <div class="grid2">
+        <label>加工地区<select id="rRegion"></select></label>
+        <label>网价状态<input id="rMarketStatus" readonly></label>
+      </div>
+      <p class="hint">材料价 = 内置参考价或期货网价折算 × 地区材料系数；加工费、表面处理 = 基准价 × 地区人工系数。下面留空表示自动，填入数字则固定使用该值。</p>
+
+      <div class="sechead">全局费率</div>
+      <div class="grid2">
+        <label>管理费率 %<input id="rMgmt" type="number" min="0" step="0.1"></label>
+        <label>利润率 %<input id="rProfit" type="number" min="0" step="0.1"></label>
+        <label>税率 %<input id="rTax" type="number" min="0" step="0.1"></label>
+        <label>运费<input id="rFreight" type="number" min="0" step="1"></label>
+        <label>其他费用<input id="rOther" type="number" min="0" step="1"></label>
+      </div>
+      <p class="hint">管理费、利润和税按“未税小计 + 运费 + 其他”顺序计算；税按含利润金额计算。</p>
+
+      <div class="sechead">材料参考价（元/kg）</div>
+      <div id="rMaterials" class="rateGrid"></div>
+
+      <div class="sechead">加工费率（元/小时、元/件或元/刀）</div>
+      <div id="rProcesses" class="rateGrid"></div>
+
+      <div class="sechead">表面处理（元/件）</div>
+      <div id="rSurfaces" class="rateGrid"></div>
+    </div>
+    <div class="dfoot">
+      <button id="rReset" class="danger"><svg class="ico" aria-hidden="true"><use href="#i-refresh"></use></svg>恢复默认</button>
+      <button id="rApplyAll"><svg class="ico" aria-hidden="true"><use href="#i-check"></use></svg>全部套用地区费率</button>
+      <div class="spacer"></div>
+      <button id="rCancel"><svg class="ico" aria-hidden="true"><use href="#i-close"></use></svg>取消</button>
+      <button id="rSave" class="primary"><svg class="ico" aria-hidden="true"><use href="#i-check"></use></svg>保存</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="vendor/occt-import-js.js"></script>
+<script src="bom_rates.js"></script>
+<script src="bom.js?v=20261101a"></script>
+<script src="bom_io.js?v=20261101n"></script>
+<script src="bom_table.js?v=20261105d"></script>
+</body>
+</html>

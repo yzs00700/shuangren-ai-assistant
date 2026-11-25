@@ -1,0 +1,18 @@
+{
+  "Port": 18766,
+  "ToolboxExe": "",
+  "LibraryRoots": [
+    {
+      "Path": "models",
+      "Kind": "model",
+      "Source": "CreoAiAsk 模型库",
+      "Enabled": true
+    },
+    {
+      "Path": "UDF",
+      "Kind": "udf",
+      "Source": "CreoAiAsk UDF",
+      "Enabled": true
+    }
+  ]
+}

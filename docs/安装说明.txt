@@ -1,0 +1,139 @@
+霜刃AI助手 · 公司电脑安装说明
+版本：v12（2026-11-01）
+包名：CreoAiAsk_Green_v12.zip
+适用：Creo Parametric 13.4.1.0 / Windows 10、11 64 位
+
+============================================================
+一、安装前检查
+============================================================
+1. 电脑已安装 Creo Parametric 13.4.1.0，并能正常启动。
+2. 建议安装 HelloCreo（模板图纸、HelloCreo 出图/PDF/DWG、
+   部分技术要求需要它）。没有 HelloCreo 也能用 AI 对话、BOM、
+   STP 导出，但 HelloCreo 相关功能会不可用。
+3. 关闭所有 Creo 窗口。
+4. 把 ZIP 复制到非 C: 盘，解压到“无空格、无中文特殊符号”的
+   路径，例如：
+     D:\CreoAiAsk_Green_v12
+   不要放在桌面、C:\Program Files、带空格的路径。
+5. 如果 ZIP 是从微信/邮件/网上下载的：
+   右键 ZIP → 属性 → 勾选“解除锁定” → 确定，再解压。
+   否则 Windows 可能拦截 Setup.bat / PowerShell 脚本。
+
+============================================================
+二、首次安装（只做一次）
+============================================================
+1. 双击 Setup.bat。
+   它会自动：
+   · 查找本机 Creo 和 HelloCreo 的安装路径；
+   · 生成本包的 config.pro、Mapkeys.pro；
+   · 安装 Creo 功能区“AI助手”按钮；
+   · 创建 work、temp 等目录；
+   · 不修改 C:\Users\Public\Documents\config.pro。
+2. 看到 “INSTALL OK” 后，关闭窗口。
+3. 双击 start_creo_ai.bat。
+   这个脚本会启动本地 AI 代理、CreoBridge 和 Creo，
+   并让 Creo 读取包内 config.pro。
+4. Creo 启动后：
+   · 功能区“模型 → 操作”里应出现“AI助手”大按钮；
+   · 也可以按 a，再按 i 打开 AI 窗口。
+5. 打开 AI 设置，填入自己的 API Key。
+   发布包 ai_config.ini 的 api_key 是空的，必须自己填。
+6. 验证：
+   · 浏览器打开 http://127.0.0.1:18766/health 应返回 ok；
+   · BOM 页“保存 BOM”应保存到当前 Creo 模型所在目录；
+   · 导出 Excel / STP 正常。
+
+============================================================
+三、Creo VB API 注册（桥接报错时才需要）
+============================================================
+如果 AI 显示“Creo 未运行 / 桥接未启动”，或
+bridge\bridge.log 里出现：
+  RPC_E_SERVERFAULT
+  XToolkitNotFound / XToolkitCommError
+
+请这样处理：
+1. 关闭 Creo。
+2. 用“管理员身份”打开 CMD 或 PowerShell。
+3. 进入 Creo 的 VB API 目录（按实际安装盘符修改）：
+   cd "E:\Program Files\PTC13\Creo 13.4.1.0\Common Files\x86e_win64\obj"
+4. 运行：
+   pfclscom.exe ./regserver
+5. 重新启动 CreoBridge.exe 和 Creo。
+
+============================================================
+四、HelloCreo 与 3D PDF
+============================================================
+· 模板图纸、HelloCreo 出图/PDF/DWG、部分技术要求：
+  需要本机安装 HelloCreo。Setup.bat 会自动查找
+  HelloCreo.dat，找不到就跳过。
+· 3D PDF 按钮依赖 Creo 里的 F10 mapkey：
+  F10 应执行“文件 → 另存为 → 3D PDF”，并输出 0012.pdf。
+  新电脑没配 F10 时，3D PDF 不会自动导出；
+  可以先用“导出 STP”，或手动在 Creo 里保存 3D PDF。
+
+============================================================
+五、以后更新程序（手动）
+============================================================
+1. 关闭 Creo 和 AI 窗口。
+2. 备份以下内容：
+   · ai_config.ini
+   · bridge\bridge_config.json
+   · work
+   · models
+   · UDF
+   · stdlib（如果放了标准件）
+3. 解压新版本到新目录，或覆盖程序文件。
+4. 必须重新运行 Setup.bat：
+   它按本机路径重新生成 config.pro 和 Mapkeys.pro。
+5. 再运行 start_creo_ai.bat。
+注意：
+· 不要覆盖 ai_config.ini，否则 API Key 会丢。
+· 不要覆盖 work / models / UDF，否则用户数据会丢。
+· 换电脑或换盘符后也必须重新运行 Setup.bat。
+
+============================================================
+六、卸载
+============================================================
+1. 关闭 Creo、AI 窗口、CreoBridge、CreoAiSrv。
+2. 双击 卸载.bat（或 Uninstall.bat）。
+3. 删除整个 CreoAiAsk_Green_v12 文件夹。
+4. 本工具不会修改 C: 公共 config.pro；卸载也不会删它。
+
+============================================================
+七、常见问题
+============================================================
+1. Setup.bat 一闪而过
+   · 可能路径有空格或脚本被锁定；
+   · 右键 ZIP → 属性 → 解除锁定，重新解压到无空格路径。
+2. 功能区没有“AI助手”
+   · 确认运行过 Setup.bat；
+   · 关闭 Creo 后重新运行 Setup.bat 和 start_creo_ai.bat；
+   · 确认 Creo 是用 start_creo_ai.bat 启动的。
+3. AI 窗口打不开
+   · 检查 18765 / 18766 端口是否被占用；
+   · 先运行 start_ai.bat，再点 AI 按钮；
+   · 看 bridge\bridge.log。
+4. BOM“保存 BOM”失败
+   · 需要先在 Creo 里打开三维模型或装配；
+   · 它保存到当前模型所在目录，文件名 <模型名>_BOM_日期.json；
+   · 没有打开模型时无法确定目录。
+5. 换电脑后提示路径不对
+   · 必须重新运行 Setup.bat，不要直接复制旧 config.pro。
+6. 杀毒软件拦截
+   · 把整个包目录加入信任/白名单；
+   · 不要只放行 exe，PowerShell 脚本也要放行。
+
+============================================================
+八、发布包说明
+============================================================
+· 发布包不包含 API Key。
+· 发布包不包含用户模型、图纸、PDF、BOM 数据、日志、PDB。
+· 不要把家里已经填了 API Key 的工作目录直接发给别人；
+  要发就发 CreoAiAsk_Green_v12.zip。
+· C:\Users\Public\Documents\config.pro 始终保持只读，
+  本工具不会修改它。
+
+安装完成后，建议先做三件事：
+1. 打开一个装配，点“从 Creo 生成 BOM”；
+2. 点“保存 BOM”，确认文件出现在模型目录；
+3. 点“导出 Excel”，确认 Excel 能打开。

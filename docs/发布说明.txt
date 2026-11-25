@@ -1,0 +1,97 @@
+============================================================
+  霜刃AI助手 (CreoAiAsk) · 绿色便携版 v12
+  适配 Creo 13.4.1.0
+  构建日期：2026-11-01
+============================================================
+
+【先看这里：三个关键文件】
+  Setup.bat          = 安装文件，第一次只运行一次。
+  start_creo_ai.bat  = 日常启动文件，以后每次都双击这个。
+  AiAsk.exe          = AI 窗口程序，由 start_creo_ai.bat 自动调用，
+                       不要单独双击它。
+
+  Mapkeys.pro / config.pro / creo_parametric_customization.ui
+                     = 配置文件，不用手动运行。
+
+【首次安装 3 步】
+  1) 解压到非 C: 盘，例如 D:\CreoAiAsk_Green_v12
+  2) 双击 Setup.bat（只运行一次）
+  3) 双击 start_creo_ai.bat（以后每次都用这个）
+
+  启动后打开任意模型 → 顶部“模型” → “操作”组里就是
+  “霜刃AI助手”大按钮。
+
+  关闭 Creo 后，AI 窗口和本地桥接会自动关闭（watch_creo.ps1）。
+
+  注意：不要用旧的 Creo 桌面快捷方式启动，否则不会加载包内
+  config.pro、Mapkeys.pro 和霜刃AI助手功能区按钮。
+
+【发布内容】
+· AI 聊天窗口 + CreoBridge 本地桥接（无需 JVM/Python/Toolkit）
+· Creo 自然语言操作、命令搜索、标准件/UDF/模型库
+· HelloCreo GB 图框模板图纸（A4/A3/A2/A1/A0 横向、A4 纵向）、
+  手动布视图/标注、PDF 导出
+· 三维导出：3D PDF（自动触发 Creo F10，带零件列表/注解/视图）、
+  STP；都保存到包内 work\三维
+· 铝型材框架自动生成 + 生成后结构快速校核
+· 多品类 BOM 报价：塑料/钣金/铝型材/铸造/CNC/3D 打印/
+  电器/紧固件/线材/其他
+· 产品BOM表（公司抬头/LOGO/BOM名称/产品名称/产品型号/
+  编制校对审核/版本/日期/修改记录；层级/类别/缩图/名称/材料/
+  表面处理/表面效果/颜色/数量/单重/总重/已出图/轮廓尺寸/备注），
+  支持 E-Bom/P-Bom CSV/JSON、正式 Excel 导出、导入报价、
+  模型内嵌预览缩略图、Excel 式单元格复制粘贴/下拉填充、撤销重做
+· 报价单抬头与 BOM 同款（客户/项目/报价单号/有效期），
+  导出正式 Excel：明细、费用汇总、含税总价、报价说明、
+  修订记录和签章栏
+· BOM / 报价 Excel 改为统一列网格：抬头、明细、合计、
+  修订记录和签章栏左右上下对齐，可直接打印
+· BOM“保存 BOM”改为保存到当前 Creo 三维模型所在目录，
+  文件名为 <模型名>_BOM_日期.json
+· 工程图技术要求选择库：通用/零件图、装配图、PCB、LED灯板、
+  塑料、钣金、压铸、铸造、玻璃、铝型材、CNC、线材、硅橡胶、
+  自定义；可勾选后插入当前 Creo 图纸
+· 地区费率/网价同步；铸造工艺选择；6063 自制型材
+· BOM 材料/表面处理/表面效果/类别支持直接输入自定义值；
+  模型无内嵌预览时可自动用 Creo 生成缩略图并缓存
+· 顶部按钮、工具页签、命令按钮统一线性小图标
+
+【首次使用 / 换电脑】
+0. 详细步骤见同目录“安装说明.txt”，建议先打印/对照。
+1. 把整个 CreoAiAsk_Green_v12 文件夹复制到非 C: 盘，
+   路径不要有空格，例如：
+     D:\CreoAiAsk_Green_v12
+2. 关闭所有 Creo 窗口。
+3. 双击 Setup.bat（或运行 jlink\setup_core.ps1）。
+   它会读取 C: 的 config.pro（只读），生成本包 config.pro、
+   Mapkeys.pro，安装功能区 AI助手 按钮，并创建 work/temp。
+4. 双击 start_creo_ai.bat 启动 Creo + AI 窗口。
+   Creo 里也可按 a 再按 i 打开 AI 窗口。
+5. 打开 AI 设置，填入你自己的 DeepSeek/兼容 API Key。
+   本发布包不包含任何 API Key，ai_config.ini 的 api_key 为空。
+   也可以直接编辑包内 ai_config.ini 后重启 CreoAiSrv.exe。
+
+【绿色/便携说明】
+· 包内 config.pro/Mapkeys.pro 由 Setup 按当前路径生成；
+  移动或复制到别的电脑后必须重新运行 Setup.bat。
+· C: 的 config.pro 只读，不会被本工具修改。
+· 临时文件、Edge 用户数据、模型、图纸、PDF、BOM 数据都在包内。
+· 本发布包不包含 temp\edge_profile（首次启动会新建）、
+  work 里的测试模型/图纸、backup、日志、PDB 和测试文件。
+· models 目录只保留分类占位和 README，供应商模型请自行放入。
+· 自动出图/批量导出是 HelloCreo 会员功能；未购买时使用模板
+  图纸 + 手动标注 + 手动导出 PDF。
+
+【已验证】
+· 本机 F:\CreoAiAsk_Green 运行正常；复制到其他路径后 Setup
+  能重写 Mapkeys/config，桥接能按新 packageRoot 启动。
+· BOM 产品表、导入报价、地区费率、网价同步、工程图技术要求
+  插入、框架生成后自动校核均已测试。
+· 详细操作和常见问题见 使用说明.txt。
+
+【重要】
+· 本包不包含 HelloCreo 安装文件或授权；需本机已安装 HelloCreo。
+· Creo/HelloCreo 路径变化时，Setup 会重新探测；探测失败请按
+  使用说明“常见问题 5”手工修改包内 config.pro。
+· 不要用旧桌面 Creo 快捷方式启动，否则读不到包内 AI mapkey。
+============================================================

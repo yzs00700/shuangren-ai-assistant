@@ -1,0 +1,15 @@
+# 默认不做换行符转换，避免破坏 Creo 的二进制/文本混合文件
+* -text
+
+*.md   text
+*.txt  text
+*.js   text
+*.html text
+*.css  text
+*.cs   text
+*.ps1  text
+*.bat  text
+*.pro  text
+*.ini  text
+*.json text
+*.ui   text

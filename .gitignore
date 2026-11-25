@@ -1,0 +1,38 @@
+# ---- 运行时与生成物 ----
+/temp/
+/work/
+/backup/
+/host/
+/.arts/
+/.codeartsdoer/
+/CreoAiAsk.log
+/setup.result.txt
+/.merkle-snapshot.json
+
+# ---- 本机配置与密钥（绝不提交）----
+/ai_config.ini
+/toolbox/ai_config.ini
+/config.pro
+/Mapkeys.pro
+/creo_parametric_customization.ui
+
+# ---- 二进制 / 调试文件 ----
+*.exe
+*.dll
+*.pdb
+*.log
+/bridge/CreoBridge.exe
+/bridge/CreoBridge.pdb
+/bridge/Interop.pfcls.dll
+
+# ---- 临时文件 ----
+*.tmp
+*.bak
+Thumbs.db
+desktop.ini
+
+# 根目录 GBK 文档（仓库内使用 docs/ 下的 UTF-8 副本）
+/安装说明.txt
+/使用说明.txt
+/发布说明.txt
+/版本.txt

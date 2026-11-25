@@ -1,0 +1,10 @@
+霜刃AI助手 v12
+打包日期：2026-11-01
+适用 Creo：13.4.1.0
+适用系统：Windows 10 / 11 64 位
+
+安装：解压到非 C: 盘无空格路径 → 关闭 Creo →
+      双击 Setup.bat → 双击 start_creo_ai.bat →
+      在 AI 设置里填自己的 API Key。
+
+详细步骤见：安装说明.txt
