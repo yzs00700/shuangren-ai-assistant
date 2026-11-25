@@ -1,4 +1,4 @@
-# 霜刃AI助手 - 双远程同步脚本
+﻿# 霜刃AI助手 - 双远程同步脚本
 # 用法：powershell -ExecutionPolicy Bypass -File sync.ps1 "提交说明"
 $ErrorActionPreference = 'Stop'
 Set-Location -LiteralPath $PSScriptRoot
@@ -15,14 +15,19 @@ if ($LASTEXITCODE -eq 0) {
     if ($LASTEXITCODE -ne 0) { throw "git commit 失败" }
 }
 
-foreach ($remote in @('origin', 'gitee')) {
-    $exists = git remote
-    if ($exists -contains $remote) {
-        Write-Host "==> push $remote main"
-        git push $remote main
-        if ($LASTEXITCODE -ne 0) { throw "push $remote 失败" }
-    } else {
-        Write-Host "跳过不存在的远程：$remote"
+$remotes = git remote
+
+if ($remotes -contains 'gitee') {
+    Write-Host "==> push gitee main"
+    git push gitee main
+    if ($LASTEXITCODE -ne 0) { throw "push gitee 失败" }
+}
+
+if ($remotes -contains 'origin') {
+    Write-Host "==> push origin main"
+    git push origin main
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning "GitHub 推送失败（常见原因：当前网络无法直连 github.com）。内容已推送到 Gitee，可稍后重试：git push origin main"
     }
 }
 
